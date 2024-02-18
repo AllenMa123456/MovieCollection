@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.io.PrintWriter;
 import java.io.File;
 import java.io.IOException;
+
 public class MovieCollection {
     private Scanner scan;
     private ArrayList<Movie> movieList;
@@ -63,12 +64,41 @@ public class MovieCollection {
     }
 
     private void searchTitles(){
+        ArrayList<String> titles = new ArrayList<>();
+        System.out.print("Enter a search term: ");
+        String searchTerm = scan.nextLine().toLowerCase();
+        int count = 1;
+        for (int i = 0; i < movieList.size(); i++){
+            if (movieList.get(i).getTitle().toLowerCase().contains(searchTerm)){
+                titles.add(movieList.get(i).getTitle());
+            }
+        }
+        for (int i = 0; i < titles.size(); i++){
+            insertionSortWordList(titles);
+            System.out.println(count + ". " + titles.get(i));
+            count++;
+        }
+
+
 
     }
 
     private void searchCast(){
 
     }
+
+    public static void insertionSortWordList(ArrayList<String> words) {
+        for (int i = 1; i < words.size(); i++){
+            String str = words.get(i);
+            int idx = i;
+            while (idx > 0 && str.compareTo(words.get(idx - 1)) < 0){
+                words.set(idx, words.get(idx - 1));
+                idx--;
+            }
+            words.set(idx, str);
+        }
+    }
+
 
 
 

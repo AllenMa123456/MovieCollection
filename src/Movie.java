@@ -16,25 +16,25 @@ public class Movie {
         this.userRating = userRating;
     }
 
-    private String getTitle(){
+    public String getTitle(){
         return title;
     }
 
-    private String getDirector(){
+    public String getDirector(){
         return director;
     }
 
-    private String getOverview(){
+    public String getOverview(){
         return overview;
     }
 
-    private String[] getCast(){
+    public String[] getCast(){
         return cast;
     }
-    private int getRuntime(){
+    public int getRuntime(){
         return runtime;
     }
-    private double getUserRating(){
+    public double getUserRating(){
         return userRating;
     }
 }
