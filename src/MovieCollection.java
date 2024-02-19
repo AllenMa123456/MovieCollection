@@ -55,7 +55,7 @@ public class MovieCollection {
                 int runtime = Integer.parseInt(splitData[4]);
                 double rating = Double.parseDouble((splitData[5]));
                 String[] actors = cast.split("\\|");
-                Movie movie = new Movie(title, actors, director, overview, runtime, rating);
+                Movie movie = new Movie(title, cast, director, overview, runtime, rating);
                 movieList.add(movie);
             }
         } catch(IOException exception) {
@@ -65,22 +65,44 @@ public class MovieCollection {
 
     private void searchTitles(){
         ArrayList<String> titles = new ArrayList<>();
+        ArrayList<Integer> otherStuff = new ArrayList<>();
         System.out.print("Enter a search term: ");
         String searchTerm = scan.nextLine().toLowerCase();
         int count = 1;
         for (int i = 0; i < movieList.size(); i++){
             if (movieList.get(i).getTitle().toLowerCase().contains(searchTerm)){
                 titles.add(movieList.get(i).getTitle());
+                otherStuff.add(i);
             }
         }
-        for (int i = 0; i < titles.size(); i++){
-            insertionSortWordList(titles);
-            System.out.println(count + ". " + titles.get(i));
-            count++;
+        System.out.println();
+        if (titles.isEmpty()){
+            System.out.println("No movie titles match that search term!");
+        } else {
+            for (int i = 0; i < titles.size(); i++){
+                insertionSortWordList(titles);
+                System.out.println(count + ". " + titles.get(i));
+                count++;
+            }
+            System.out.println();
+            System.out.println("Which movie would you like to learn about?");
+            System.out.print("Enter number: ");
+            int choice = scan.nextInt();
+            System.out.println();
+            for (int i = 0; i < otherStuff.size(); i++){
+                if (movieList.get(otherStuff.get(i)).getTitle().contains(titles.get(choice - 1))){
+                    System.out.println("Title: " + movieList.get(otherStuff.get(i)).getTitle());
+                    System.out.println("Runtime: " + movieList.get(otherStuff.get(i)).getRuntime() + " minutes");
+                    System.out.println("Directed by: " + movieList.get(otherStuff.get(i)).getDirector());
+                    System.out.println("Cast: " + movieList.get(otherStuff.get(i)).getCast());
+                    System.out.println("Overview: " + movieList.get(otherStuff.get(i)).getOverview());
+                    System.out.println("User Rating: " + movieList.get(otherStuff.get(i)).getUserRating());
+                    break;
+                }
+            }
         }
-
-
-
+        scan.nextLine();
+        System.out.println();
     }
 
     private void searchCast(){
