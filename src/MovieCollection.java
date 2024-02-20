@@ -1,6 +1,5 @@
 import java.util.*;
 import java.util.Scanner;
-import java.io.PrintWriter;
 import java.io.File;
 import java.io.IOException;
 
@@ -78,6 +77,7 @@ public class MovieCollection {
         System.out.println();
         if (titles.isEmpty()){
             System.out.println("No movie titles match that search term!");
+            System.out.println("** Press Enter to return to menu **");
         } else {
             for (int i = 0; i < titles.size(); i++){
                 insertionSortWordList(titles);
@@ -125,6 +125,7 @@ public class MovieCollection {
         }
         if (people.isEmpty()){
             System.out.println("No results match your search");
+            System.out.println("** Press Enter to return to menu **");
         } else {
             for (int i = 0; i < people.size(); i++){
                 insertionSortWordList(people);
