@@ -106,7 +106,67 @@ public class MovieCollection {
     }
 
     private void searchCast(){
+        ArrayList<String> people = new ArrayList<>();
+        ArrayList<Integer> otherStuff = new ArrayList<>();
+        ArrayList<String> titles = new ArrayList<>();
+        System.out.print("Enter a person to search for (first or last name): ");
+        String searchTerm = scan.nextLine().toLowerCase();
+        int count = 1;
+        for (int i = 0; i < movieList.size(); i++){
+            if (movieList.get(i).getCast().toLowerCase().contains(searchTerm)){
+                String[] actors = movieList.get(i).getCast().split("\\|");
+                for (int j = 0; j < actors.length; j++){
+                    if (actors[j].toLowerCase().contains(searchTerm) && !(people.contains(actors[j]))){
+                        people.add(actors[j]);
+                        otherStuff.add(i);
+                    }
+                }
+            }
+        }
+        if (people.isEmpty()){
+            System.out.println("No results match your search");
+        } else {
+            for (int i = 0; i < people.size(); i++){
+                insertionSortWordList(people);
+                System.out.println(count + ". " + people.get(i));
+                count++;
+            }
+            System.out.println();
+            System.out.println("Which would you like to see all movies for?");
+            System.out.print("Enter number: ");
+            int choice = scan.nextInt();
+            System.out.println();
+            for (int i = 0; i < movieList.size(); i++){
+                if (movieList.get(i).getCast().contains(people.get(choice - 1))){
+                    titles.add(movieList.get(i).getTitle());
+                }
+            }
+            insertionSortWordList(titles);
+            count = 1;
+            for (int i = 0; i < titles.size(); i++){
+                System.out.println(count + ". " + titles.get(i));
+                count++;
+            }
+            System.out.println();
+            System.out.println("Which movie would you like to learn about?");
+            System.out.print("Enter number: ");
+            choice = scan.nextInt();
+            System.out.println();
 
+            for (int i = 0; i < movieList.size(); i++){
+                if (movieList.get(i).getTitle().contains(titles.get(choice - 1))){
+                    System.out.println("Title: " + movieList.get(i).getTitle());
+                    System.out.println("Runtime: " + movieList.get(i).getRuntime() + " minutes");
+                    System.out.println("Directed by: " + movieList.get(i).getDirector());
+                    System.out.println("Cast: " + movieList.get(i).getCast());
+                    System.out.println("Overview: " + movieList.get(i).getOverview());
+                    System.out.println("User Rating: " + movieList.get(i).getUserRating());
+                    break;
+                }
+            }
+        }
+        scan.nextLine();
+        System.out.println();
     }
 
     public static void insertionSortWordList(ArrayList<String> words) {
